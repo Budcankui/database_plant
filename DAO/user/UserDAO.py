@@ -9,24 +9,36 @@ from model.User import User
 class UserDAO(BaseDAO):
 
     def get_user_by_id(self, user_id):
-        sql = text("SELECT * FROM user WHERE user_id = :user_id")
+        sql = text("SELECT * FROM sys_user WHERE user_id = :user_id")
         parameters = {"user_id": user_id}
         with self.get_session() as session:
             result = session.execute(sql, parameters).fetchone()
-        return User(*result) if result else None
+        return self._map_result_to_user(result)
 
     def get_user_by_username(self, username):
-        sql = text("SELECT * FROM user WHERE username = :username")
+        sql = text("SELECT * FROM sys_user WHERE username = :username")
         parameters = {"username": username}
         with self.get_session() as session:
             result = session.execute(sql, parameters).fetchone()
-        return User(*result) if result else None
+        return self._map_result_to_user(result)
 
     def get_all_users(self):
-        sql = text("SELECT * FROM user")
+        sql = text("SELECT * FROM sys_user")
         with self.get_session() as session:
             result = session.execute(sql).fetchall()
-        return [User(*row) for row in result]
+        return [self._map_result_to_user(row) for row in result]
+
+    # ... 其他方法 ...
+
+    def _map_result_to_user(self, result):
+        if result:
+            return User(
+                user_id=result[0],
+                username=result[1],
+                password=result[2],
+                role=result[3]
+            )
+        return None
 
     def add_user(self, username, password, role):
         sql = text("INSERT INTO sys_user (username, password, role) VALUES (:username, :password, :role)")

@@ -21,7 +21,7 @@ class DataSource:
         }
         db_connection_string = (
             f"mssql+pymssql://{db_params['user']}:{db_params['password']}@{db_params['host']}:{db_params['port']}"
-            f"/{db_params['database']}?charset=GBK"
+            f"/{db_params['database']}?charset=utf8"
         )
         # print(db_connection_string)
         print(f"Connecting to: {db_connection_string}")

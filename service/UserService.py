@@ -1,16 +1,17 @@
 # from DAO.UserDAO import UserDAO
 from DAO.DAOFactory import DAOFactory
+from DAO.user.UserDAO import UserDAO
 
 
 class UserService:
     def __init__(self):
-        self.user_dao = DAOFactory.get_user_dao()
+        self.user_dao = UserDAO()
 
     def login(self, username, password):
         # 调用UserDAO中的方法进行登录验证
         user = self.user_dao.get_user_by_username(username)
 
-        if user and user['password'] == password:
+        if user and user.password == password:
             return user
         else:
             return None
@@ -54,3 +55,19 @@ class UserService:
             print("删除用户失败，请重试。")
 
         return success
+
+    def show_all_user(self):
+        # 显示所有用户
+        users = self.user_dao.get_all_users()
+        print("用户列表")
+        print("ID\t用户名\t密码\t角色")
+        for user in users:
+            print(f"{user.user_id}\t{user.username}\t{user.password}\t{user.role}")
+        print("按任意键返回")
+        input()
+
+    def find_user_by_name(self, user_name):
+        return self.user_dao.get_user_by_username(user_name)
+
+
+
