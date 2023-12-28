@@ -10,7 +10,7 @@ class Plant:
     cultivation_tips: str = ""  # 栽培技术要点
     pest_control_measures: str = ""  # 病虫害防治措施
     application_value: str = ""  # 应用价值
-    creator: str = ""  # 创建者
+    create_by: str = ""  # 创建者
     create_time: datetime = None
     update_time: datetime =None
 

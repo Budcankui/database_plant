@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 from typing import List
 
-from entity.info.Plant import Plant
-from entity.info.PlantImage import PlantImage
-from entity.info.Taxonomy import Taxonomy
+from model.info.Plant import Plant
+from model.info.PlantImage import PlantImage
+from model.info.Taxonomy import Taxonomy
 
 
 @dataclass

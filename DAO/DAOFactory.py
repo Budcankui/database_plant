@@ -1,17 +1,28 @@
-
-from DAO.info.DistributionDao import DistributionDao
-
+from DAO.user.UserDAO import UserDAO
 
 
-class DaoFactory:
+class DAOFactory:
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            # 在这里进行初始化工作，只会执行一次
+            cls._instance._init_factory()
+        return cls._instance
+
+    def _init_factory(self):
+        # 在这里进行 DAO 工厂的初始化工作
+        pass
     @staticmethod
-    def get_distribution_dao() -> DistributionDao:
-        # 在此可以根据需要返回不同的 DAO 实现类
-        return DistributionDao()
+    def get_user_dao():
+        return UserDAO()
 
-if __name__ == '__main__':
+    # 其他 DAO 的获取方法...
 
-    # 使用示例
-    dao_impl = DaoFactory.get_distribution_dao()
-    result = dao_impl.get_distribution_by_id(1)
-    print(result)
+# 示例用法
+if __name__ == "__main__":
+    dao_factory = DAOFactory()
+
+    # 获取 UserDAO 实例
+    user_dao = dao_factory.get_user_dao()
