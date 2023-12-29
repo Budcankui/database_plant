@@ -6,7 +6,7 @@ Base = declarative_base()
 
 
 class User(Base):
-    __tablename__ = 'user'
+    __tablename__ = 'sys_user'
 
     user_id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String(32))

@@ -43,11 +43,11 @@ class UserManagementView():
         print("3. 养护人员")
         role = input("请输入选项：")
         if role == '1':
-            role = 'leader'
+            role = '上级主管部门'
         elif role == '2':
-            role = 'monitor'
+            role = '监测人员'
         elif role == '3':
-            role = 'worker'
+            role = '养护人员'
         else:
             print("无效选项，请重新输入。")
             return

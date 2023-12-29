@@ -1,30 +1,29 @@
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String, DateTime,  Unicode
+
 from datetime import datetime
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
+
+from DAO.DataSource import DataSource
+
 Base = declarative_base()
 
-class InfoPlant(Base):
+class Plant(Base):
     __tablename__ = 'info_plant'
 
     plant_id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(255), nullable=False)
-    plant_desc = Column(String(255))
-    plant_value = Column(String(255))
-    disease_id = Column(Integer)
-    created_by = Column(String(255))
-    created_at = Column(DateTime, default=datetime.now)
-    updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+    species_id = Column(Integer,comment='物种id')
+    disease_id = Column(Integer,comment='病虫害id')
+    plant_desc = Column(Unicode(255, collation='Chinese_PRC_CI_AS'),comment="形态特征")
+    plant_value = Column(Unicode(255, collation='Chinese_PRC_CI_AS'), comment="应用价值")
+    plant_tip = Column(Unicode(255, collation='Chinese_PRC_CI_AS'), comment="栽培要点")
+    image_path = Column(Unicode(255, collation='Chinese_PRC_CI_AS'), comment="图片文件路径")
+    image_desc = Column(Unicode(255, collation='Chinese_PRC_CI_AS'), comment="配图描述")
+    image_location = Column(Unicode(255, collation='Chinese_PRC_CI_AS'), comment="拍摄地点")
+    create_by = Column(Integer,comment="配图拍摄人")
+    create_time = Column(DateTime, default=datetime.now)
+    update_time = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+# 创建表
+Base.metadata.create_all(DataSource().engine)
 
-class InfoImage(Base):
-    __tablename__ = 'info_image'
 
-    image_id = Column(Integer, primary_key=True, autoincrement=True)
-    plant_id = Column(Integer)
-    file_path = Column(String(255))
-    image_desc = Column(Integer)
-    image_location = Column(String(255))
-    image_uploader = Column(Integer)
-    created_by = Column(String(255))
-    created_at = Column(DateTime, default=datetime.now)
-    updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+

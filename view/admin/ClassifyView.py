@@ -101,8 +101,8 @@ class ClassifyView:
         print("3. 添加物种信息")
         print("4. 删除物种信息")
         print("5. 根据生长环境模糊查询")
-        print("6. 根据科查询")
-        print("7. 根据属名查询")
+        print("6. 根据科查询下属植物")
+        print("7. 根据属名查询下属植物")
         choice = input("请输入选项：")
         if choice == '1':
             self.view_species_list()

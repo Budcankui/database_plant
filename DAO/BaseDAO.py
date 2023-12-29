@@ -7,6 +7,8 @@ class BaseDAO:
     def __init__(self):
         self.data_source = DataSource()
 
+
+
     def get_session(self) -> Session:
         return self.data_source.get_session()
 

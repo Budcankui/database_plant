@@ -1,6 +1,7 @@
 from DAO.DAOFactory import DAOFactory
 from service.UserService import UserService
 from view.admin.AdminView import AdminView
+from view.maintenance.MaintenanceView import MaintenanceView
 
 
 class GardenPlantApp:
@@ -28,7 +29,10 @@ class GardenPlantApp:
                     # 根据角色跳转到不同的界面
                     if self.user.role == 'admin':
                         AdminView(self.user).start()
-
+                    elif self.user.role == '养护人员':
+                        MaintenanceView(self.user).start()
+                    elif self.user.role == '监测人员':
+                        MonitoringView(self.user).start()
                     break
                 else:
                     print("登录失败，请检查用户名和密码。")
