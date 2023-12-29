@@ -1,6 +1,7 @@
 from DAO.DAOFactory import DAOFactory
 from service.UserService import UserService
 from view.admin.AdminView import AdminView
+from view.leader.LeaderView import LeaderView
 from view.maintenance.MaintenanceView import MaintenanceView
 from view.monitor.MonitorView import MonitoringView
 
