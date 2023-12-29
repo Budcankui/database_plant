@@ -4,6 +4,7 @@ from DAO.info.PlantDAO import PlantDAO
 from DAO.monitor.DataDAO import DataDAO
 from DAO.monitor.ExceptionDAO import ExceptionDAO
 from model.User import User
+
 from model.monitor import MonitorData
 
 
@@ -87,6 +88,9 @@ class MonitorService():
         print("       最大值  最小值  温平均值")
         print(f"温度    {res.max_temperature :<10}  {res.min_temperature :<10}  {res.avg_temperature :<10}")
         print(f"湿度    {res.max_humidity :<10}  {res.min_humidity :<10}  {res.avg_humidity :<10}")
+
+
+
 
 
 

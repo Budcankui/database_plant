@@ -69,5 +69,18 @@ class UserService:
     def find_user_by_name(self, user_name):
         return self.user_dao.get_user_by_username(user_name)
 
+    def query_worker_list(self):
+        worker_users= self.user_dao.get_worker_list()
+        print("ID \t 用户名 \t 角色")
+        for user in worker_users:
+            print(f"{user.user_id}\t{user.username}\t{user.role}")
+        input("按任意键返回")
+
+    def query_monitor_list(self):
+        monitor_users= self.user_dao.get_monitor_list()
+        print("ID \t 用户名 \t 角色")
+        for user in monitor_users:
+            print(f"{user.user_id}\t{user.username}\t{user.role}")
+        input("按任意键返回")
 
 

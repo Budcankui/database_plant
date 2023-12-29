@@ -2,6 +2,7 @@ from DAO.DAOFactory import DAOFactory
 from service.UserService import UserService
 from view.admin.AdminView import AdminView
 from view.maintenance.MaintenanceView import MaintenanceView
+from view.monitor.MonitorView import MonitoringView
 
 
 class GardenPlantApp:
@@ -33,7 +34,9 @@ class GardenPlantApp:
                         MaintenanceView(self.user).start()
                     elif self.user.role == '监测人员':
                         MonitoringView(self.user).start()
-                    break
+                    elif self.user.role == '上级主管部门':
+                        LeaderView(self.user).start()
+
                 else:
                     print("登录失败，请检查用户名和密码。")
 

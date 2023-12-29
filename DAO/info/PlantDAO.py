@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import text, func
 
 from model.info import Plant
+from model.maintenance import Task
 from vo.PlantVo import PlantVO
 
 
@@ -95,4 +96,9 @@ class PlantDAO(BaseDAO):
             for column, value in filter_conditions.items():
                 query=query.filter(getattr(PlantVO, column).like(f'%{value}%'))
             return query.all()
+
+    def query_plant_join_maintenance_classfiy(self):
+        # 养护信息、分类信息、基本信息联合查询
+        with self.get_session() as session:
+            return session.query(PlantVO,Task).join(Task, Task.plant_id==PlantVO.plant_id).all()
 

@@ -151,4 +151,20 @@ class PlantService():
                 f"{plant_vo.image_desc}  {plant_vo.image_location}")
         input("按回车键返回")
 
+    def query_plant_join_maintenance_classfiy(self):
+        res=self.plant_dao.query_plant_join_maintenance_classfiy()
+        print("植物ID  养护任务ID  养护人ID  任务名称  任务描述  任务地点  执行时间  任务状态  科  属  种  病名  防治方法  形态特征  应用价值  栽培要点  图片文件路径  配图描述  拍摄地点")
+        for plant_vo,task in res:
+            print(f"{plant_vo.plant_id}  {task.task_id}  {task.user_id}"
+                  f"  {task.task_name}  {task.task_desc}  "
+                  f"{task.task_location}  {task.task_time}  {task.task_status}  "
+                  f"{plant_vo.family_name}  {plant_vo.genus_name}  {plant_vo.species_name} "
+                  f" {plant_vo.disease_name}  {plant_vo.disease_control_method}  "
+                  f"{plant_vo.plant_desc}  {plant_vo.plant_value}  {plant_vo.plant_tip}"
+                  f"  {plant_vo.image_path}  {plant_vo.image_desc}  {plant_vo.image_location}")
+        input("按回车键返回")
+
+
+
+
 

@@ -64,11 +64,22 @@ class UserDAO(BaseDAO):
             session.commit()  # 提交事务
         return True
 
+    def get_worker_list(self):
+        with self.get_session() as session:
+            return session.query(User).filter(User.role == '养护人员').all()
+
+    def get_monitor_list(self):
+        with self.get_session() as session:
+            return session.query(User).filter(User.role == '监测人员').all()
+
+    def get_by_id_and_role(self, worker_id, role):
+        with self.get_session() as session:
+            return session.query(User).filter(User.user_id == worker_id, User.role == role).first()
+
 
 if __name__ == '__main__':
     user_dao = UserDAO()
 
-    res=user_dao.get_all_users()
+    res = user_dao.get_all_users()
     print(res)
     # user_dao.add_user("t11t", "test", "哈哈哈")
-

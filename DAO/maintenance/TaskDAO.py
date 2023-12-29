@@ -9,8 +9,9 @@ from model.maintenance import Task
 class TaskDAO(BaseDAO):
 
     def add_task(self, plant_id, user_id, task_name, task_time, task_location, task_desc, task_status):
-        sql = text("INSERT INTO maintenance_task (plant_id, user_id, task_name, task_time, task_location, task_desc, task_status) "
-                   "VALUES (:plant_id, :user_id, :task_name, :task_time, :task_location, :task_desc, :task_status)")
+        sql = text(
+            "INSERT INTO maintenance_task (plant_id, user_id, task_name, task_time, task_location, task_desc, task_status) "
+            "VALUES (:plant_id, :user_id, :task_name, :task_time, :task_location, :task_desc, :task_status)")
         parameters = {
             "plant_id": plant_id,
             "user_id": user_id,
@@ -24,7 +25,8 @@ class TaskDAO(BaseDAO):
             session.execute(sql, parameters)
             session.commit()
         return {"plant_id": plant_id, "user_id": user_id, "task_name": task_name,
-                "task_time": task_time, "task_location": task_location, "task_desc": task_desc, "task_status": task_status}
+                "task_time": task_time, "task_location": task_location, "task_desc": task_desc,
+                "task_status": task_status}
 
     def get_all_tasks(self):
         sql = text("SELECT * FROM maintenance_task")
@@ -69,7 +71,8 @@ class TaskDAO(BaseDAO):
             session.commit()
         return {"task_id": task_id, "plant_id": updated_plant_id, "user_id": updated_user_id,
                 "task_name": updated_task_name, "task_time": updated_task_time,
-                "task_location": updated_task_location, "task_desc": updated_task_desc, "task_status": updated_task_status}
+                "task_location": updated_task_location, "task_desc": updated_task_desc,
+                "task_status": updated_task_status}
 
     def delete_task(self, task_id):
         sql = text("DELETE FROM maintenance_task WHERE task_id = :task_id")
@@ -96,13 +99,13 @@ class TaskDAO(BaseDAO):
     def get_worker_todo_task(self, user):
         # 使用sqlalchemy的session
         with self.get_session() as session:
-             # 使用sqlalchemy的text方法，可以直接使用sql语句
-            todo_tasks=session.query(Task).filter(Task.user_id == user.user_id, Task.task_status == "未完成").all()
+            # 使用sqlalchemy的text方法，可以直接使用sql语句
+            todo_tasks = session.query(Task).filter(Task.user_id == user.user_id, Task.task_status == "未完成").all()
             return todo_tasks
 
     def get_worker_done_task(self, user):
         with self.get_session() as session:
-            done_tasks=session.query(Task).filter(Task.user_id == user.user_id, Task.task_status == "已完成").all()
+            done_tasks = session.query(Task).filter(Task.user_id == user.user_id, Task.task_status == "已完成").all()
             return done_tasks
 
     def update_status(self, task):
@@ -110,8 +113,28 @@ class TaskDAO(BaseDAO):
             session.query(Task).filter(Task.task_id == task.task_id).update({Task.task_status: task.task_status})
             session.commit()
 
+    def add(self, task):
+        with self.get_session() as session:
+            session.add(task)
+            session.commit()
+
+    def update(self, task):
+        with self.get_session() as session:
+            session.query(Task).filter(Task.task_id == task.task_id). \
+                update({Task.plant_id: task.plant_id,
+                        Task.user_id: task.user_id,
+                        Task.task_name: task.task_name,
+                        Task.task_time: task.task_time,
+                        Task.task_location: task.task_location,
+                        Task.task_desc: task.task_desc})
+            session.commit()
+
+    def delete(self, task_id):
+        with self.get_session() as session:
+            session.query(Task).filter(Task.task_id == task_id).delete()
+            session.commit()
+
 
 if __name__ == '__main__':
-
     task_dao = TaskDAO()
     task_dao.get_worker_todo_task(User(user_id=2))
