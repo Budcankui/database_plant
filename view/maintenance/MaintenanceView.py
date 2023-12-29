@@ -22,6 +22,9 @@ class MaintenanceView():
                 self.disease_view()
             elif choice == '2':
                 self.task_view()
+            elif choice == '3':
+                print("退出系统。")
+                break
 
     def disease_view(self):
         while True:
